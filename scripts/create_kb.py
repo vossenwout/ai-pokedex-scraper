@@ -1,6 +1,7 @@
-from pymilvus import MilvusClient, DataType, Function, FunctionType
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+from pymilvus import DataType, Function, FunctionType, MilvusClient
 
 load_dotenv("config/.env")
 
@@ -12,7 +13,8 @@ def create_hybrid_collections():
     )
 
     schema = client.create_schema(
-        enable_dynamic_field=True, description="Pokedex data for a rag project."
+        enable_dynamic_field=True,
+        description="Pokedex data for a rag project.",
     )
 
     # id field automatically generated
@@ -50,16 +52,22 @@ def create_hybrid_collections():
 
     # add vector index
     index_params.add_index(
-        field_name="vector", metric_type="COSINE", index_type="AUTOINDEX"
+        field_name="vector",
+        metric_type="COSINE",
+        index_type="AUTOINDEX",
     )
 
     # add sparse index
     index_params.add_index(
-        field_name="sparse", index_type="AUTOINDEX", metric_type="BM25"
+        field_name="sparse",
+        index_type="AUTOINDEX",
+        metric_type="BM25",
     )
 
     client.create_collection(
-        collection_name="pokedex", schema=schema, index_params=index_params
+        collection_name="pokedex",
+        schema=schema,
+        index_params=index_params,
     )
 
 

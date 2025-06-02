@@ -1,6 +1,7 @@
-import scrapy
 import logging
 import re
+
+import scrapy
 from pokedex_scraper.items import PokedexEntry
 from scrapy.http import HtmlResponse
 
@@ -14,11 +15,10 @@ class PokedexSpider(scrapy.Spider):
     custom_settings = {
         "ITEM_PIPELINES": {
             "pokedex_scraper.pipelines.PokedexPipeline": 300,
-        }
+        },
     }
 
     def parse(self, response):
-
         # Extract all <loc> elements from the XML
         logger.debug("Extracting URLs from XML")
 
@@ -26,7 +26,6 @@ class PokedexSpider(scrapy.Spider):
         urls = response.xpath("//s:url/s:loc/text()", namespaces=ns).getall()
 
         for url in urls:
-
             # examples we want to scrape:
             # https://pokemondb.net/pokedex/pidgeot
             # https://pokemondb.net/pokedex/charizard
@@ -35,13 +34,13 @@ class PokedexSpider(scrapy.Spider):
                 yield scrapy.Request(url, callback=self.parse_pokemon)
 
     def parse_pokemon(self, response: HtmlResponse):
-        html = response.xpath(
-            '//main[@id="main" and contains(@class, "main-content") and contains(@class, "grid-container")]'
+        response.xpath(
+            '//main[@id="main" and contains(@class, "main-content") and contains(@class, "grid-container")]',
         ).get()
 
         # Select all direct children of <main> that are NOT <nav>
         content_parts = response.xpath(
-            '//main[@id="main" and contains(@class, "main-content") and contains(@class, "grid-container")]/*[not(self::nav)]'
+            '//main[@id="main" and contains(@class, "main-content") and contains(@class, "grid-container")]/*[not(self::nav)]',
         ).getall()
 
         # Join the pieces back into one HTML string

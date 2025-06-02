@@ -1,9 +1,10 @@
-from typing import List
+import shutil
 from pathlib import Path
 
-from langchain_text_splitters import MarkdownHeaderTextSplitter
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-import shutil
+from langchain_text_splitters import (
+    MarkdownHeaderTextSplitter,
+    RecursiveCharacterTextSplitter,
+)
 
 
 class MarkdownChunker:
@@ -13,12 +14,12 @@ class MarkdownChunker:
         save_dir: Path,
         max_input_tokens: int = 2048,
         char_per_token: int = 3,
-    ):
+    ) -> None:
         self.source_dir = source_dir
         self.save_dir = save_dir
         self.max_char_per_chunk = max_input_tokens * char_per_token
 
-    def _chunk_markdown(self, md_text: str) -> List[str]:
+    def _chunk_markdown(self, md_text: str) -> list[str]:
         splitter = MarkdownHeaderTextSplitter(
             headers_to_split_on=[
                 ("#", "Header 1"),

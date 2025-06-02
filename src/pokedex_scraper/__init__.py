@@ -1,17 +1,19 @@
-from pokedex_scraper.utils.logging import init_logging
-import os
 import logging
+from pathlib import Path
+
 from dotenv import load_dotenv
+
+from pokedex_scraper.utils.logging import init_logging
 
 logger = logging.getLogger(__name__)
 
-if os.path.exists("config/logging.yaml"):
+if Path("config/logging.yaml").exists():
     init_logging("config/logging.yaml")
     logger.info("Logging initialized")
 else:
     logger.error("Logging config not found")
 
-if os.path.exists("config/.env"):
+if Path("config/.env").exists():
     load_dotenv("config/.env")
     logger.info("Environment variables loaded")
 else:

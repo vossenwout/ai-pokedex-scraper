@@ -53,6 +53,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 
+.ruff_cache
 # pytest
 .cache/
 
