@@ -46,6 +46,10 @@ class PokedexSpider(scrapy.Spider):
         # Join the pieces back into one HTML string
         cleaned_html = "".join(content_parts)
 
+        pokemon_name = response.url.split("/")[-1]
+        if pokemon_name in ["all"]:
+            return
+
         yield PokedexEntry(
             pokemon_name=response.url.split("/")[-1],
             url=response.url,

@@ -5,6 +5,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 from pymilvus import MilvusClient
+from tqdm import tqdm
 
 load_dotenv("config/.env")
 
@@ -55,7 +56,9 @@ class Ingestor:
 
     def run(self):
         chunked_pokedex_dirs = [d for d in self.source_dir.iterdir() if d.is_dir()]
-        for chunked_pokedex_dir in chunked_pokedex_dirs:
+        for chunked_pokedex_dir in tqdm(
+            chunked_pokedex_dirs, desc="Inserting knowledge"
+        ):
             with open(chunked_pokedex_dir / "metadata.json") as f:
                 metadata = json.load(f)
 

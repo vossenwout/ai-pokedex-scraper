@@ -5,6 +5,7 @@ from langchain_text_splitters import (
     MarkdownHeaderTextSplitter,
     RecursiveCharacterTextSplitter,
 )
+from tqdm import tqdm
 
 
 class MarkdownChunker:
@@ -37,7 +38,8 @@ class MarkdownChunker:
         return [chunk.page_content for chunk in chunks]
 
     def run(self):
-        for md_file in self.source_dir.rglob("**/*.md"):
+        md_files = list(self.source_dir.rglob("**/*.md"))
+        for md_file in tqdm(md_files, desc="Chunking"):
             md_text = md_file.read_text()
             chunks = self._chunk_markdown(md_text)
             for i, chunk in enumerate(chunks):
