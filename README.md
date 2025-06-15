@@ -2,7 +2,7 @@
 
 This project contains a script to setup a zilliz knowledgebase and contains a scraping / ingestion job to scrape pokedex data from https://pokemondb.net/pokedex and ingest it into the zilliz knowledgebase. This knowledgebase is used by the AI Pokedex Assistant to answer questions.
 
-<img src="data/banner.png" alt="Pokedex Frontend Screenshot" width="300"/>
+<img src="assets/banner.png" alt="Pokedex Frontend Screenshot" width="300"/>
 
 ## AI Pokedex Project Repos
 
@@ -55,7 +55,7 @@ To run the assistant you are required to create a `.env` file in the config fold
 touch config/.env
 ```
 
-This env file should contain the env vars of `.env.example`.
+This env file should contain the env vars of `config/.env.example`.
 
 | Environment Variable             | Description                         | Where to get it              |
 | -------------------------------- | ----------------------------------- | ---------------------------- |
@@ -65,23 +65,33 @@ This env file should contain the env vars of `.env.example`.
 
 ## Project Structure
 
-- `src/rag_assistant/`: Contains the AI Pokedex assistant implementation.
-- `src/server/`: Contains the FastAPI server.
+- `scripts/create_kb.py`: Contains the script to create the zilliz knowledgebase.
+- `src/pokedex_scraper/__main__.py`: Contains the Scrapy job to scrape the pokedex data to `data/raw` folder.
+- `src/pokedex_scraper/chunking/chunker.py`: Contains the script to chunk the scraped data stored in `data/raw` folder into smaller chunks. Results are stored in `data/chunked` folder.
+- `src/pokedex_scraper/ingestion/ingestor.py`: Contains the script to ingest the chunked data from `data/chunked` folder into the zilliz knowledgebase.
 
-## Running the API
+## Running the Scraper
 
-1.  **Run the application:**
+1. **Create the zilliz knowledgebase:**
 
-    ```bash
-    poetry run python -m server
-    ```
+   ```bash
+   poetry run python scripts/create_kb.py
+   ```
 
-2.  **Access the API:**
+2. **Run the scraper:**
 
-    The API will be available at `http://localhost:8000`.
+   ```bash
+   poetry run python -m pokedex_scraper
+   ```
 
-3.  **Access the API documentation:**
+3. **Chunk the scraped data:**
 
-    The API documentation will be available at `http://localhost:8000/docs`.
+   ```bash
+   poetry run python src/pokedex_scraper/chunking/chunker.py
+   ```
 
-I would recommend using the frontend to interact with the API. You can find the frontend repo [here](https://github.com/vossenwout/pokedex-frontend).
+4. **Ingest the chunked data into the zilliz knowledgebase:**
+
+   ```bash
+   poetry run python src/pokedex_scraper/ingestion/ingestor.py
+   ```
