@@ -8,10 +8,10 @@ This project contains a script to setup a zilliz knowledgebase and contains a sc
 
 These are the repos that are used to create and run the AI Pokedex.
 
-- [Knowledgebase and Scraper](https://github.com/vossenwout/pokedex-scraper)
-- [Assistant API](https://github.com/vossenwout/pokedex-rag-api)
-- [Frontend](https://github.com/vossenwout/pokedex-frontend)
-- [Evaluation Framework](https://github.com/vossenwout/pokedex-rag-evaluation)
+- [Knowledgebase and Scraper](https://github.com/vossenwout/ai-pokedex-scraper)
+- [Assistant API](https://github.com/vossenwout/ai-pokedex-assistant-api)
+- [Frontend](https://github.com/vossenwout/ai-pokedex-frontend)
+- [Evaluation Framework](https://github.com/vossenwout/ai-pokedex-rag-evaluation)
 
 I created a youtube video where I explain the project: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
@@ -35,7 +35,7 @@ Before you begin, ensure you have the following installed:
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/vossenwout/pokedex-scraper
+    git clone https://github.com/vossenwout/ai-pokedex-scraper
     cd pokedex-scraper
     ```
 
